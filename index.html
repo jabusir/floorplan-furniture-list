@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Furniture Shopping List — Plan 22</title>
+<style>
+  :root {
+    --navy: #1F4E78;
+    --navy-light: #DCE6F1;
+    --must: #C00000;
+    --nice: #6B7280;
+    --border: #E2E8F0;
+    --bg: #F7F9FC;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    padding: 32px;
+    color: #1a1a1a;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 {
+    color: var(--navy);
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+  .summary {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .summary-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 24px;
+    flex: 1;
+    min-width: 160px;
+  }
+  .summary-card .label {
+    font-size: 12px;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .summary-card .value {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--navy);
+    margin-top: 4px;
+  }
+  .summary-card.must .value { color: var(--must); }
+  .category {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .category-header {
+    background: var(--navy-light);
+    padding: 10px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .category-header h2 {
+    font-size: 15px;
+    color: var(--navy);
+    margin: 0;
+  }
+  .cat-total {
+    font-weight: bold;
+    color: var(--navy);
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th {
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: #888;
+    padding: 8px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 10px 18px;
+    font-size: 13px;
+    border-bottom: 1px solid #F0F2F5;
+  }
+  tr:last-child td { border-bottom: none; }
+  .item-name { font-weight: 600; }
+  .center { text-align: center; }
+  .right { text-align: right; }
+  .total-cell { font-weight: bold; }
+  .notes { color: #777; font-size: 12px; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: bold;
+  }
+  .badge-must { background: #FDE8E8; color: var(--must); }
+  .badge-nice { background: #EEF0F2; color: var(--nice); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Furniture Shopping List — Plan 22</h1>
+  <div class="subtitle">2 Bed / 2 Bath · 843–965 sq ft · Estimated mid-market prices (IKEA/Wayfair/Target range)</div>
+
+  <div class="summary">
+    <div class="summary-card">
+      <div class="label">Grand Total</div>
+      <div class="value">$5,060</div>
+    </div>
+    <div class="summary-card must">
+      <div class="label">Must-Have</div>
+      <div class="value">$4,100</div>
+    </div>
+    <div class="summary-card">
+      <div class="label">Nice-to-Have</div>
+      <div class="value">$960</div>
+    </div>
+  </div>
+
+  
+    <div class="category">
+      <div class="category-header">
+        <h2>Entry</h2>
+        <span class="cat-total">$125</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Shoe rack / bench</td>
+            <td class="center">1</td>
+            <td class="right">$60</td>
+            <td class="right total-cell">$60</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">Fits narrow entry nook</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Wall hooks</td>
+            <td class="center">1</td>
+            <td class="right">$20</td>
+            <td class="right total-cell">$20</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes">Set of 3-4</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Console table / key tray</td>
+            <td class="center">1</td>
+            <td class="right">$45</td>
+            <td class="right total-cell">$45</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Living Room</h2>
+        <span class="cat-total">$1,670</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Sofa (loveseat/small 2-3 seat)</td>
+            <td class="center">1</td>
+            <td class="right">$600</td>
+            <td class="right total-cell">$600</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">Room is 11'1" x 11'2" - measure before buying</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Coffee table</td>
+            <td class="center">1</td>
+            <td class="right">$150</td>
+            <td class="right total-cell">$150</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">TV stand</td>
+            <td class="center">1</td>
+            <td class="right">$150</td>
+            <td class="right total-cell">$150</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">TV</td>
+            <td class="center">1</td>
+            <td class="right">$400</td>
+            <td class="right total-cell">$400</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">43-55in depending on space</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Accent chair</td>
+            <td class="center">1</td>
+            <td class="right">$200</td>
+            <td class="right total-cell">$200</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Area rug</td>
+            <td class="center">1</td>
+            <td class="right">$120</td>
+            <td class="right total-cell">$120</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Floor lamp</td>
+            <td class="center">1</td>
+            <td class="right">$50</td>
+            <td class="right total-cell">$50</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Kitchen / Dining</h2>
+        <span class="cat-total">$810</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Dining table + 4 chairs</td>
+            <td class="center">1</td>
+            <td class="right">$400</td>
+            <td class="right total-cell">$400</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">Round table shown in plan</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Trash / recycling bins</td>
+            <td class="center">1</td>
+            <td class="right">$40</td>
+            <td class="right total-cell">$40</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Basic cookware set</td>
+            <td class="center">1</td>
+            <td class="right">$100</td>
+            <td class="right total-cell">$100</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Small appliances (microwave, toaster, etc.)</td>
+            <td class="center">1</td>
+            <td class="right">$150</td>
+            <td class="right total-cell">$150</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">Fridge/DW built in per plan</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Bar stools</td>
+            <td class="center">2</td>
+            <td class="right">$60</td>
+            <td class="right total-cell">$120</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes">If using counter seating</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Bedroom 1 (Primary)</h2>
+        <span class="cat-total">$1,310</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Queen/king bed frame + mattress</td>
+            <td class="center">1</td>
+            <td class="right">$900</td>
+            <td class="right total-cell">$900</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">10'3" x 13'9" room</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Nightstands</td>
+            <td class="center">2</td>
+            <td class="right">$60</td>
+            <td class="right total-cell">$120</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Dresser</td>
+            <td class="center">1</td>
+            <td class="right">$250</td>
+            <td class="right total-cell">$250</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Mirror</td>
+            <td class="center">1</td>
+            <td class="right">$40</td>
+            <td class="right total-cell">$40</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes">Closet built in</td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Bedroom 2</h2>
+        <span class="cat-total">$700</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Full/queen bed or desk setup</td>
+            <td class="center">1</td>
+            <td class="right">$500</td>
+            <td class="right total-cell">$500</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">10'5" x 10'11" - guest room or office</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Nightstand</td>
+            <td class="center">1</td>
+            <td class="right">$50</td>
+            <td class="right total-cell">$50</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Small dresser / shelving</td>
+            <td class="center">1</td>
+            <td class="right">$150</td>
+            <td class="right total-cell">$150</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Bath 1 & 2</h2>
+        <span class="cat-total">$190</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Shower curtain + liner</td>
+            <td class="center">2</td>
+            <td class="right">$25</td>
+            <td class="right total-cell">$50</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">If not glass enclosure</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Bath mats</td>
+            <td class="center">2</td>
+            <td class="right">$15</td>
+            <td class="right total-cell">$30</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Towel bars / hooks</td>
+            <td class="center">2</td>
+            <td class="right">$20</td>
+            <td class="right total-cell">$40</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Trash cans</td>
+            <td class="center">2</td>
+            <td class="right">$10</td>
+            <td class="right total-cell">$20</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Toiletry shelving</td>
+            <td class="center">2</td>
+            <td class="right">$25</td>
+            <td class="right total-cell">$50</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>Laundry Nook</h2>
+        <span class="cat-total">$60</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Laundry basket</td>
+            <td class="center">1</td>
+            <td class="right">$20</td>
+            <td class="right total-cell">$20</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Shelf above unit</td>
+            <td class="center">1</td>
+            <td class="right">$40</td>
+            <td class="right total-cell">$40</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="category">
+      <div class="category-header">
+        <h2>General</h2>
+        <span class="cat-total">$195</span>
+      </div>
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Qty</th><th>Est. Unit Price</th><th>Est. Total</th><th>Priority</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+    
+          <tr>
+            <td class="item-name">Curtains / blinds</td>
+            <td class="center">4</td>
+            <td class="right">$30</td>
+            <td class="right total-cell">$120</td>
+            <td class="center"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes">Per window</td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Full-length mirror</td>
+            <td class="center">1</td>
+            <td class="right">$40</td>
+            <td class="right total-cell">$40</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+          <tr>
+            <td class="item-name">Entryway / hallway lighting</td>
+            <td class="center">1</td>
+            <td class="right">$35</td>
+            <td class="right total-cell">$35</td>
+            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes"></td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+</div>
+</body>
+</html>
