@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 <title>Furniture Shopping List — Plan 22</title>
 <style>
   :root {
@@ -11,49 +12,88 @@
     --nice: #6B7280;
     --border: #E2E8F0;
     --bg: #F7F9FC;
+    --accent: #B45309;
+    --accent-light: #FEF3E2;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     font-family: Arial, Helvetica, sans-serif;
     background: var(--bg);
     margin: 0;
-    padding: 32px;
+    padding: 24px;
     color: #1a1a1a;
   }
   .wrap { max-width: 1000px; margin: 0 auto; }
   h1 {
     color: var(--navy);
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 4px;
   }
   .subtitle {
     color: #666;
     font-size: 13px;
     font-style: italic;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 140px;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
+    padding: 12px 10px;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    white-space: nowrap;
+  }
+  .tab-btn.active {
+    color: var(--navy);
+    border-bottom-color: var(--navy);
+  }
+  .tab-btn.yusra.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
   .summary {
     display: flex;
     gap: 16px;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
     flex-wrap: wrap;
   }
   .summary-card {
     background: white;
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 16px 24px;
+    padding: 14px 20px;
     flex: 1;
-    min-width: 160px;
+    min-width: 130px;
   }
   .summary-card .label {
-    font-size: 12px;
+    font-size: 11px;
     color: #666;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   .summary-card .value {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     color: var(--navy);
     margin-top: 4px;
@@ -63,25 +103,25 @@
     background: white;
     border: 1px solid var(--border);
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     overflow: hidden;
   }
   .category-header {
     background: var(--navy-light);
-    padding: 10px 18px;
+    padding: 10px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .category-header h2 {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--navy);
     margin: 0;
   }
   .cat-total {
     font-weight: bold;
     color: var(--navy);
-    font-size: 14px;
+    font-size: 13px;
   }
   table {
     width: 100%;
@@ -93,11 +133,11 @@
     text-transform: uppercase;
     letter-spacing: 0.4px;
     color: #888;
-    padding: 8px 18px;
+    padding: 8px 16px;
     border-bottom: 1px solid var(--border);
   }
   td {
-    padding: 10px 18px;
+    padding: 10px 16px;
     font-size: 13px;
     border-bottom: 1px solid #F0F2F5;
   }
@@ -113,32 +153,176 @@
     border-radius: 999px;
     font-size: 11px;
     font-weight: bold;
+    white-space: nowrap;
   }
   .badge-must { background: #FDE8E8; color: var(--must); }
   .badge-nice { background: #EEF0F2; color: var(--nice); }
+  .badge-fit-ok { background: #E3F5E9; color: #16794C; }
+  .badge-fit-tight { background: #FDECE8; color: #C0432C; }
+
+  /* Yusra's picks cards */
+  .pick-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .pick-header {
+    background: var(--accent-light);
+    padding: 12px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .pick-header h2 {
+    font-size: 15px;
+    color: var(--accent);
+    margin: 0;
+  }
+  .pick-body {
+    display: flex;
+    gap: 16px;
+    padding: 16px 18px;
+    flex-wrap: wrap;
+  }
+  .pick-img {
+    width: 220px;
+    max-width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+    flex-shrink: 0;
+  }
+  .pick-details { flex: 1; min-width: 220px; }
+  .pick-price {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .pick-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid #F0F2F5;
+    font-size: 13px;
+    gap: 12px;
+  }
+  .pick-row:last-child { border-bottom: none; }
+  .pick-row .k { color: #888; }
+  .pick-row .v { font-weight: 600; text-align: right; }
+  .pick-note {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #555;
+    background: #F7F9FC;
+    border-radius: 8px;
+    padding: 10px 12px;
+    line-height: 1.5;
+  }
+  .pick-link {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .budget-table th {
+    background: var(--navy-light);
+    color: var(--navy);
+    text-transform: none;
+    font-size: 12.5px;
+    padding: 10px 14px;
+  }
+  .budget-table td { padding: 10px 14px; font-size: 13px; }
+  .budget-table tr:last-child td { font-weight: bold; border-top: 2px solid var(--border); border-bottom: none; }
+
+  /* Mobile responsive */
+  @media (max-width: 640px) {
+    body { padding: 12px; }
+    h1 { font-size: 19px; }
+    .summary { gap: 8px; }
+    .summary-card { min-width: 44%; padding: 10px 12px; }
+    .summary-card .value { font-size: 17px; }
+    .tab-btn { font-size: 12.5px; padding: 10px 6px; min-width: 110px; }
+
+    table thead { display: none; }
+    table, tbody, tr, td { display: block; width: 100%; }
+    tr {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+    }
+    tr:last-child { border-bottom: none; }
+    td {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: none;
+      font-size: 13px;
+      text-align: right;
+    }
+    td.item-name { font-size: 14px; justify-content: flex-start; }
+    td::before {
+      content: attr(data-label);
+      font-weight: normal;
+      color: #888;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-right: 10px;
+    }
+    td.item-name::before { display: none; }
+    td.notes:empty { display: none; }
+
+    .pick-body { flex-direction: column; }
+    .pick-img { width: 100%; height: 180px; }
+
+    .budget-table { font-size: 12px; }
+    .budget-table th, .budget-table td { padding: 8px 8px; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <h1>Furniture Shopping List — Plan 22</h1>
-  <div class="subtitle">2 Bed / 2 Bath · 843–965 sq ft · Estimated mid-market prices (IKEA/Wayfair/Target range)</div>
+  <div class="subtitle">2 Bed / 2 Bath · 843–965 sq ft</div>
 
-  <div class="summary">
-    <div class="summary-card">
-      <div class="label">Grand Total</div>
-      <div class="value">$5,060</div>
-    </div>
-    <div class="summary-card must">
-      <div class="label">Must-Have</div>
-      <div class="value">$4,100</div>
-    </div>
-    <div class="summary-card">
-      <div class="label">Nice-to-Have</div>
-      <div class="value">$960</div>
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('list', this)">Furniture List</button>
+    <button class="tab-btn yusra" onclick="showTab('yusra', this)">Yusra's Picks</button>
   </div>
 
-  
+  <div id="list" class="tab-panel active">
+    <div class="summary">
+      <div class="summary-card">
+        <div class="label">Grand Total</div>
+        <div class="value">$5,060</div>
+      </div>
+      <div class="summary-card must">
+        <div class="label">Must-Have</div>
+        <div class="value">$4,100</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Nice-to-Have</div>
+        <div class="value">$960</div>
+      </div>
+    </div>
+    
     <div class="category">
       <div class="category-header">
         <h2>Entry</h2>
@@ -151,30 +335,30 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Shoe rack / bench</td>
-            <td class="center">1</td>
-            <td class="right">$60</td>
-            <td class="right total-cell">$60</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">Fits narrow entry nook</td>
+            <td class="item-name" data-label="Item">Shoe rack / bench</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$60</td>
+            <td class="right total-cell" data-label="Total">$60</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">Fits narrow entry nook</td>
           </tr>
         
           <tr>
-            <td class="item-name">Wall hooks</td>
-            <td class="center">1</td>
-            <td class="right">$20</td>
-            <td class="right total-cell">$20</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes">Set of 3-4</td>
+            <td class="item-name" data-label="Item">Wall hooks</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$20</td>
+            <td class="right total-cell" data-label="Total">$20</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes">Set of 3-4</td>
           </tr>
         
           <tr>
-            <td class="item-name">Console table / key tray</td>
-            <td class="center">1</td>
-            <td class="right">$45</td>
-            <td class="right total-cell">$45</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Console table / key tray</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$45</td>
+            <td class="right total-cell" data-label="Total">$45</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
@@ -193,66 +377,66 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Sofa (loveseat/small 2-3 seat)</td>
-            <td class="center">1</td>
-            <td class="right">$600</td>
-            <td class="right total-cell">$600</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">Room is 11'1" x 11'2" - measure before buying</td>
+            <td class="item-name" data-label="Item">Sofa (loveseat/small 2-3 seat)</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$600</td>
+            <td class="right total-cell" data-label="Total">$600</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">Room is 11'1" x 11'2" - measure before buying</td>
           </tr>
         
           <tr>
-            <td class="item-name">Coffee table</td>
-            <td class="center">1</td>
-            <td class="right">$150</td>
-            <td class="right total-cell">$150</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Coffee table</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$150</td>
+            <td class="right total-cell" data-label="Total">$150</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">TV stand</td>
-            <td class="center">1</td>
-            <td class="right">$150</td>
-            <td class="right total-cell">$150</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">TV stand</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$150</td>
+            <td class="right total-cell" data-label="Total">$150</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">TV</td>
-            <td class="center">1</td>
-            <td class="right">$400</td>
-            <td class="right total-cell">$400</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">43-55in depending on space</td>
+            <td class="item-name" data-label="Item">TV</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$400</td>
+            <td class="right total-cell" data-label="Total">$400</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">43-55in depending on space</td>
           </tr>
         
           <tr>
-            <td class="item-name">Accent chair</td>
-            <td class="center">1</td>
-            <td class="right">$200</td>
-            <td class="right total-cell">$200</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Accent chair</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$200</td>
+            <td class="right total-cell" data-label="Total">$200</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Area rug</td>
-            <td class="center">1</td>
-            <td class="right">$120</td>
-            <td class="right total-cell">$120</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Area rug</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$120</td>
+            <td class="right total-cell" data-label="Total">$120</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Floor lamp</td>
-            <td class="center">1</td>
-            <td class="right">$50</td>
-            <td class="right total-cell">$50</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Floor lamp</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$50</td>
+            <td class="right total-cell" data-label="Total">$50</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
@@ -271,48 +455,48 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Dining table + 4 chairs</td>
-            <td class="center">1</td>
-            <td class="right">$400</td>
-            <td class="right total-cell">$400</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">Round table shown in plan</td>
+            <td class="item-name" data-label="Item">Dining table + 4 chairs</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$400</td>
+            <td class="right total-cell" data-label="Total">$400</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">Round table shown in plan</td>
           </tr>
         
           <tr>
-            <td class="item-name">Trash / recycling bins</td>
-            <td class="center">1</td>
-            <td class="right">$40</td>
-            <td class="right total-cell">$40</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Trash / recycling bins</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$40</td>
+            <td class="right total-cell" data-label="Total">$40</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Basic cookware set</td>
-            <td class="center">1</td>
-            <td class="right">$100</td>
-            <td class="right total-cell">$100</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Basic cookware set</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$100</td>
+            <td class="right total-cell" data-label="Total">$100</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Small appliances (microwave, toaster, etc.)</td>
-            <td class="center">1</td>
-            <td class="right">$150</td>
-            <td class="right total-cell">$150</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">Fridge/DW built in per plan</td>
+            <td class="item-name" data-label="Item">Small appliances (microwave, toaster, etc.)</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$150</td>
+            <td class="right total-cell" data-label="Total">$150</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">Fridge/DW built in per plan</td>
           </tr>
         
           <tr>
-            <td class="item-name">Bar stools</td>
-            <td class="center">2</td>
-            <td class="right">$60</td>
-            <td class="right total-cell">$120</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes">If using counter seating</td>
+            <td class="item-name" data-label="Item">Bar stools</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$60</td>
+            <td class="right total-cell" data-label="Total">$120</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes">If using counter seating</td>
           </tr>
         
         </tbody>
@@ -331,39 +515,39 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Queen/king bed frame + mattress</td>
-            <td class="center">1</td>
-            <td class="right">$900</td>
-            <td class="right total-cell">$900</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">10'3" x 13'9" room</td>
+            <td class="item-name" data-label="Item">Queen/king bed frame + mattress</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$900</td>
+            <td class="right total-cell" data-label="Total">$900</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">10'3" x 13'9" room</td>
           </tr>
         
           <tr>
-            <td class="item-name">Nightstands</td>
-            <td class="center">2</td>
-            <td class="right">$60</td>
-            <td class="right total-cell">$120</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Nightstands</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$60</td>
+            <td class="right total-cell" data-label="Total">$120</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Dresser</td>
-            <td class="center">1</td>
-            <td class="right">$250</td>
-            <td class="right total-cell">$250</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Dresser</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$250</td>
+            <td class="right total-cell" data-label="Total">$250</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Mirror</td>
-            <td class="center">1</td>
-            <td class="right">$40</td>
-            <td class="right total-cell">$40</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes">Closet built in</td>
+            <td class="item-name" data-label="Item">Mirror</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$40</td>
+            <td class="right total-cell" data-label="Total">$40</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes">Closet built in</td>
           </tr>
         
         </tbody>
@@ -382,30 +566,30 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Full/queen bed or desk setup</td>
-            <td class="center">1</td>
-            <td class="right">$500</td>
-            <td class="right total-cell">$500</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">10'5" x 10'11" - guest room or office</td>
+            <td class="item-name" data-label="Item">Full/queen bed or desk setup</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$500</td>
+            <td class="right total-cell" data-label="Total">$500</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">10'5" x 10'11" - guest room or office</td>
           </tr>
         
           <tr>
-            <td class="item-name">Nightstand</td>
-            <td class="center">1</td>
-            <td class="right">$50</td>
-            <td class="right total-cell">$50</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Nightstand</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$50</td>
+            <td class="right total-cell" data-label="Total">$50</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Small dresser / shelving</td>
-            <td class="center">1</td>
-            <td class="right">$150</td>
-            <td class="right total-cell">$150</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Small dresser / shelving</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$150</td>
+            <td class="right total-cell" data-label="Total">$150</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
@@ -424,48 +608,48 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Shower curtain + liner</td>
-            <td class="center">2</td>
-            <td class="right">$25</td>
-            <td class="right total-cell">$50</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">If not glass enclosure</td>
+            <td class="item-name" data-label="Item">Shower curtain + liner</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$25</td>
+            <td class="right total-cell" data-label="Total">$50</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">If not glass enclosure</td>
           </tr>
         
           <tr>
-            <td class="item-name">Bath mats</td>
-            <td class="center">2</td>
-            <td class="right">$15</td>
-            <td class="right total-cell">$30</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Bath mats</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$15</td>
+            <td class="right total-cell" data-label="Total">$30</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Towel bars / hooks</td>
-            <td class="center">2</td>
-            <td class="right">$20</td>
-            <td class="right total-cell">$40</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Towel bars / hooks</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$20</td>
+            <td class="right total-cell" data-label="Total">$40</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Trash cans</td>
-            <td class="center">2</td>
-            <td class="right">$10</td>
-            <td class="right total-cell">$20</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Trash cans</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$10</td>
+            <td class="right total-cell" data-label="Total">$20</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Toiletry shelving</td>
-            <td class="center">2</td>
-            <td class="right">$25</td>
-            <td class="right total-cell">$50</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Toiletry shelving</td>
+            <td class="center" data-label="Qty">2</td>
+            <td class="right" data-label="Unit Price">$25</td>
+            <td class="right total-cell" data-label="Total">$50</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
@@ -484,21 +668,21 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Laundry basket</td>
-            <td class="center">1</td>
-            <td class="right">$20</td>
-            <td class="right total-cell">$20</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Laundry basket</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$20</td>
+            <td class="right total-cell" data-label="Total">$20</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Shelf above unit</td>
-            <td class="center">1</td>
-            <td class="right">$40</td>
-            <td class="right total-cell">$40</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Shelf above unit</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$40</td>
+            <td class="right total-cell" data-label="Total">$40</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
@@ -517,36 +701,112 @@
         <tbody>
     
           <tr>
-            <td class="item-name">Curtains / blinds</td>
-            <td class="center">4</td>
-            <td class="right">$30</td>
-            <td class="right total-cell">$120</td>
-            <td class="center"><span class="badge badge-must">Must-have</span></td>
-            <td class="notes">Per window</td>
+            <td class="item-name" data-label="Item">Curtains / blinds</td>
+            <td class="center" data-label="Qty">4</td>
+            <td class="right" data-label="Unit Price">$30</td>
+            <td class="right total-cell" data-label="Total">$120</td>
+            <td class="center" data-label="Priority"><span class="badge badge-must">Must-have</span></td>
+            <td class="notes" data-label="Notes">Per window</td>
           </tr>
         
           <tr>
-            <td class="item-name">Full-length mirror</td>
-            <td class="center">1</td>
-            <td class="right">$40</td>
-            <td class="right total-cell">$40</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Full-length mirror</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$40</td>
+            <td class="right total-cell" data-label="Total">$40</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
           <tr>
-            <td class="item-name">Entryway / hallway lighting</td>
-            <td class="center">1</td>
-            <td class="right">$35</td>
-            <td class="right total-cell">$35</td>
-            <td class="center"><span class="badge badge-nice">Nice-to-have</span></td>
-            <td class="notes"></td>
+            <td class="item-name" data-label="Item">Entryway / hallway lighting</td>
+            <td class="center" data-label="Qty">1</td>
+            <td class="right" data-label="Unit Price">$35</td>
+            <td class="right total-cell" data-label="Total">$35</td>
+            <td class="center" data-label="Priority"><span class="badge badge-nice">Nice-to-have</span></td>
+            <td class="notes" data-label="Notes"></td>
           </tr>
         
         </tbody>
       </table>
     </div>
     
+  </div>
+
+  <div id="yusra" class="tab-panel">
+    <div class="summary">
+      <div class="summary-card">
+        <div class="label">If Both Added</div>
+        <div class="value">$6,669–$7,919</div>
+      </div>
+      <div class="summary-card must">
+        <div class="label">Must-Have (new)</div>
+        <div class="value">$5,709–$6,959</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">vs. Original</div>
+        <div class="value">$5,060</div>
+      </div>
+    </div>
+
+    <div class="pick-card">
+      <div class="pick-header">
+        <h2>Zone Cream 4-Piece Modular Sectional + Ottoman</h2>
+        <span class="badge badge-fit-tight">Tight fit</span>
+      </div>
+      <div class="pick-body">
+        <img class="pick-img" src="https://www.livingspaces.com/globalassets/productassets/300000-399999/320000-329999/320000-320999/320000-320099/320081/320081_beige_fabric_sectional_signature_01.jpg?w=440&h=320&mode=pad" alt="Zone Cream Sectional">
+        <div class="pick-details">
+          <div class="pick-price">$1,560</div>
+          <div class="pick-row"><span class="k">Overall size</span><span class="v">124"W x 86"D x 36"H</span></div>
+          <div class="pick-row"><span class="k">Living room</span><span class="v">11'1" x 11'2" (133" x 134")</span></div>
+          <div class="pick-row"><span class="k">Replaces placeholder</span><span class="v">$600 sofa</span></div>
+          <div class="pick-row"><span class="k">Budget impact</span><span class="v">+$960</span></div>
+          <div class="pick-note">124" leg fits the 133" wall with ~9" to spare, but the 86" depth eats most of the room's other dimension — leaves only ~47" for the TV, ottoman, and walking path. Room is also open to the kitchen. Measure your actual walls before ordering.</div>
+          <a class="pick-link" href="https://www.livingspaces.com/pdp-zone-cream-4-piece-modular-sectional-with-2-corners-1-armless-chair-ottoman-320081" target="_blank" rel="noopener">View on Living Spaces →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pick-card">
+      <div class="pick-header">
+        <h2>West Elm Laurent Bed (Queen)</h2>
+        <span class="badge badge-fit-ok">Fits comfortably</span>
+      </div>
+      <div class="pick-body">
+        <img class="pick-img" src="https://assets.weimgs.com/weimgs/rk/images/wcm/products/202612/0932/laurent-bed-10-d.jpg" alt="Laurent Bed">
+        <div class="pick-details">
+          <div class="pick-price">$1,149 – $1,899 <span style="font-size:12px;color:#888;font-weight:normal;">(frame only, by fabric)</span></div>
+          <div class="pick-row"><span class="k">Overall size</span><span class="v">74.5"W x 94"D x 42.25"H</span></div>
+          <div class="pick-row"><span class="k">Bedroom 1</span><span class="v">10'3" x 13'9" (123" x 165")</span></div>
+          <div class="pick-row"><span class="k">Replaces placeholder</span><span class="v">$900 bed + mattress</span></div>
+          <div class="pick-row"><span class="k">Budget impact</span><span class="v">+$649 to +$1,899*</span></div>
+          <div class="pick-note">Plenty of room: leaves ~48" along the wall for nightstands and ~71" of open floor lengthwise. *Frame doesn't include a mattress — budget an extra $400–$900 for one, which is folded into the impact range shown.</div>
+          <a class="pick-link" href="https://www.westelm.com/products/laurent-bed-h12057/" target="_blank" rel="noopener">View on West Elm →</a>
+        </div>
+      </div>
+    </div>
+
+    <table class="budget-table">
+      <thead>
+        <tr><th>Scenario</th><th>Grand Total</th><th>Must-Have Total</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Original list</td><td>$5,060</td><td>$4,100</td></tr>
+        <tr><td>Low estimate (both added)</td><td>$6,669</td><td>$5,709</td></tr>
+        <tr><td>High estimate (both added)</td><td>$7,919</td><td>$6,959</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
 </body>
 </html>
